@@ -1,0 +1,35 @@
+.searchBar{
+    width: 80%;
+    height: 40%;
+    padding: 20px;
+    background-color:blue;
+    display: flex;
+    justify-content: space-between;
+}
+.main{
+    
+    display: flex;
+    justify-content: center;
+}
+.input-group{
+    width: 30% !important;
+}
+.profile{
+    padding-left: 20%;
+    padding-right: 20%;
+}
+.card{
+    width: 120%;
+    margin-bottom: 20px;
+}
+.profil-image > img{
+    width: 80px;
+    border-radius: 50%;
+}
+#toggel-button{
+    position: relative;
+}
+#toggel-button > button{
+    position: absolute;
+    bottom: 2px;
+}
