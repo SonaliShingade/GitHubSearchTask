@@ -1,28 +1,37 @@
 import { Component } from '@angular/core';
-import{ DataService} from './data.service'
+import{ DataService} from './data.service';
+import { Subject } from 'rxjs';
+import { debounceTime,distinctUntilChanged } from "rxjs/operators";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public GitHubData
-  public profileData
-  constructor( private getData: DataService) {
-   
-   }
+
   title = 'GitHubTask';
   user
   key='login';
   totalRecord = 0;
   reverse = false;
+  public GitHubData
+  public profileData
+  public detailsButton:boolean = true;
+  
+  userInput = new Subject<string>();
 
-  ngOnInit() {
-   console.log(this.GitHubData)
-  }
+  constructor( private getDataService: DataService) {
+    this.userInput.pipe(
+      debounceTime(100),
+      distinctUntilChanged())
+      .subscribe(value => {
+        this.user=value;
+        this.getGitHubUsers()      
+      });
+   }
 
   getGitHubUsers(){
-    this.getData.getData(this.user).subscribe((data)=>{
+    this.getDataService.getData(this.user).subscribe((data)=>{
       console.log(data)
        if(data['total_count'] != 0){
         this.GitHubData=data['items']
@@ -31,14 +40,15 @@ export class AppComponent {
     },
     (Error)=>{
       this.GitHubData=[]
+      this.totalRecord=0
     }
     );  
   }
 
   getProfileDetail(userID){
-   this.getData.getProfileDetail(this.user).subscribe((data)=>{
+   this.getDataService.getProfileDetail(this.user).subscribe((data)=>{
      this.profileData=data
-     console.log(data)
+     this.detailsButton=!this.detailsButton
    })
   }
 
@@ -46,5 +56,4 @@ export class AppComponent {
     this.key = sortVal;
     this.reverse = order;
   }
-  
 }

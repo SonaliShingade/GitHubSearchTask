@@ -1,63 +1,77 @@
-<div class="container" style="background: #efe9e9;">
-  <div class="row main">
-      <div class="searchBar">
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            sort data
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#" (click)="sortData('login',false)">Sort by Name(A-Z)</a>
-            <a class="dropdown-item" href="#" (click)="sortData('login',true)">Sort by Name(Z-A)</a>
-            <a class="dropdown-item" href="#">Sort by Rank</a>
+<div class="container-fluid">
+  <div class="container-fluid header">
+    <div class="row main">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div class="searchBar">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              sort data
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#" (click)="sortData('login',false)">Sort by Name(A-Z)</a>
+              <a class="dropdown-item" href="#" (click)="sortData('login',true)">Sort by Name(Z-A)</a>
+              <!-- <a class="dropdown-item" href="#">Sort by Rank</a> -->
+            </div>
           </div>
-        </div>
-        <div class="input-group">
-          <input type="text" class="form-control" [(ngModel)]="user" (input)="getGitHubUsers()" aria-label="Dollar amount (with dot and two decimal places)">
-          <div class="input-group-append">
-            <span class="input-group-text">$</span> 
+          <div class="input-group">
+            <input type="text" class="form-control serachtext" placeholder="Search" [(ngModel)]="user"
+            (ngModelChange)="this.userInput.next($event)" aria-label="Dollar amount (with dot and two decimal places)">
+            <div class="input-group-append">
+              <span class="input-group-text"><img src="../assets/search.png" class="search"></span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <div class="row">
-    <div class="profile">
-      <h6>Total record:- <span>{{totalRecord}}</span></h6>
-      <div class="card"   *ngFor="let user of GitHubData | orderBy: key : reverse:'case-insensitive' | paginate: { itemsPerPage: 3, currentPage: p } ; let i = index" >
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-2">
-              <div class="profil-image">
-                <img  src="https://avatars0.githubusercontent.com/u/7676016?v=4">
-              </div>
-            </div>
-            <div class="col-md-8">
-              <h4>{{user.login}}</h4>
-              <h6>{{user.url}}</h6>
-              <span>Data Label: Value One </span><br>
-              <span>Data Label: Value One </span>
-            </div>
-            <div class="col-md-2" id="toggel-button">
-            <a></a>  <button type="button" data-toggle="collapse" [attr.href]="'#collapseExample'+i"  (click)="getProfileDetail(user.id)"  class="btn btn-outline-primary">Primary</button>
-            </div>
-          </div>
-        </div>
-        <table class="table collapse" attr.id="collapseExample{{i}}">
-          <thead>
-            <tr >
-              <th>Repo name</th>
-              <th>Programing Language</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let userProfile of profileData ">
-              <td>{{userProfile.name}}</td>
-              <td>{{userProfile.language}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <hr>
+      <div class="col-md-2"></div>
     </div>
   </div>
-  <pagination-controls (pageChange)="p = $event" class="my-pagination"></pagination-controls>
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="profile">
+        <h6>Total record:- <span>{{totalRecord}}</span></h6>
+        <div class="card"
+          *ngFor="let user of GitHubData | orderBy: key : reverse:'case-insensitive' | paginate: { itemsPerPage: 3, currentPage: p } ; let i = index">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="profil-image">
+                  <img src="https://avatars0.githubusercontent.com/u/7676016?v=4">
+                </div>
+              </div>
+              <div class="col-md-8">
+                <h4>{{user.login}}</h4>
+                <h6>Profile:{{user.url}}</h6>
+                <span>Data Label: Value One </span><br>
+                <span>Data Label: Value One </span>
+              </div>
+              <div class="col-md-2" id="toggel-button">
+                <a></a> <button type="button" data-toggle="collapse" [attr.href]="'#collapseExample'+i"
+                  (click)="getProfileDetail(user.id)" class="btn btn-outline-primary"><span >Details</span></button>
+              </div>
+            </div>
+          </div>
+          <table class="table collapse" attr.id="collapseExample{{i}}">
+            <thead>
+              <tr>
+                <th>Repo Name</th>
+                <th>Programing Language</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let userProfile of profileData ">
+                <td>{{userProfile.name}}</td>
+                <td>{{userProfile.language}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+      </div>
+      <pagination-controls *ngIf="totalRecord != 0" (pageChange)="p = $event" class="my-pagination"></pagination-controls>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
 </div>
