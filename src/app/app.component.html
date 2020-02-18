@@ -43,27 +43,15 @@
         </div>
         <table class="table collapse" attr.id="collapseExample{{i}}">
           <thead>
-            <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Email</th>
+            <tr >
+              <th>Repo name</th>
+              <th>Programing Language</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>john@example.com</td>
-            </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mary@example.com</td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>july@example.com</td>
+            <tr *ngFor="let userProfile of profileData ">
+              <td>{{userProfile.name}}</td>
+              <td>{{userProfile.language}}</td>
             </tr>
           </tbody>
         </table>

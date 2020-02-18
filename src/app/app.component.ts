@@ -7,7 +7,7 @@ import{ DataService} from './data.service'
 })
 export class AppComponent {
   public GitHubData
-
+  public profileData
   constructor( private getData: DataService) {
    
    }
@@ -37,6 +37,7 @@ export class AppComponent {
 
   getProfileDetail(userID){
    this.getData.getProfileDetail(this.user).subscribe((data)=>{
+     this.profileData=data
      console.log(data)
    })
   }
