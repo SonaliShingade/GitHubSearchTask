@@ -2,13 +2,13 @@
   <div class="row main">
       <div class="searchBar">
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown button
+          <button class="btn btn-secondary dropdown-toggle"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            sort data
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" href="#" (click)="sortData('login',false)">Sort by Name(A-Z)</a>
+            <a class="dropdown-item" href="#" (click)="sortData('login',true)">Sort by Name(Z-A)</a>
+            <a class="dropdown-item" href="#">Sort by Rank</a>
           </div>
         </div>
         <div class="input-group">
@@ -21,8 +21,8 @@
     </div>
   <div class="row">
     <div class="profile">
-      <h6>Total record</h6>
-      <div class="card"   *ngFor="let user of GitHubData" >
+      <h6>Total record:- <span>{{totalRecord}}</span></h6>
+      <div class="card"   *ngFor="let user of GitHubData | orderBy: key : reverse:'case-insensitive' | paginate: { itemsPerPage: 3, currentPage: p } ; let i = index" >
         <div class="card-body">
           <div class="row">
             <div class="col-md-2">
@@ -31,17 +31,17 @@
               </div>
             </div>
             <div class="col-md-8">
-              <h4>Sonali Shingade</h4>
+              <h4>{{user.login}}</h4>
               <h6>{{user.url}}</h6>
               <span>Data Label: Value One </span><br>
               <span>Data Label: Value One </span>
             </div>
             <div class="col-md-2" id="toggel-button">
-              <button type="button" data-toggle="collapse" href="#collapseExample" (click)="getProfileDetail(user.id)"  class="btn btn-outline-primary">Primary</button>
+            <a></a>  <button type="button" data-toggle="collapse" [attr.href]="'#collapseExample'+i"  (click)="getProfileDetail(user.id)"  class="btn btn-outline-primary">Primary</button>
             </div>
           </div>
         </div>
-        <table class="table collapse" id="collapseExample">
+        <table class="table collapse" attr.id="collapseExample{{i}}">
           <thead>
             <tr>
               <th>Firstname</th>
@@ -71,4 +71,5 @@
       <hr>
     </div>
   </div>
+  <pagination-controls (pageChange)="p = $event" class="my-pagination"></pagination-controls>
 </div>
